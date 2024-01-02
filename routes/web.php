@@ -63,6 +63,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/hapus/{id}', [App\Http\Controllers\BukuController::class, 'hapus'])->name('.hapus');
     });
 
+    Route::name('kunjungan')->prefix('kunjungan')->group(function () {
+        Route::get('/', [App\Http\Controllers\KunjunganController::class, 'index'])->name('.index');
+        Route::post('/tambah', [App\Http\Controllers\KunjunganController::class, 'store'])->name('.store');
+        Route::get('/ubah/{id}', [App\Http\Controllers\KunjunganController::class, 'ubah'])->name('.ubah');
+        Route::get('/hapus/{id}', [App\Http\Controllers\KunjunganController::class, 'hapus'])->name('.hapus');
+    });
+
     Route::name('pengguna')->prefix('pengguna')->group(function () {
         Route::get('/', [App\Http\Controllers\PenggunaController::class, 'index'])->name('.index');
         Route::get('/tambah', [App\Http\Controllers\PenggunaController::class, 'tambah'])->name('.tambah');

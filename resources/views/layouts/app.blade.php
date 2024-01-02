@@ -322,7 +322,7 @@
                                     </ul>
                                 </li>                                
                                 <li>
-                                    <a href="{{url('/')}}" class="waves-effect waves-dark">
+                                    <a href="{{route('kunjungan.index')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-book"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Kunjungan</span>
                                         <span class="pcoded-mcaret"></span>

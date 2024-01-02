@@ -15,7 +15,7 @@ class BukuSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        $faker = Faker::create('id_ID');
 
         // Ambil semua ID kategori yang ada di database
         $kategoriIds = Kategori::pluck('id')->toArray();

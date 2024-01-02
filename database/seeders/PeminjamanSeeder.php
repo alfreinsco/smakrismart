@@ -12,7 +12,7 @@ class PeminjamanSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
+        $faker = Faker::create('id_ID');
 
         // Ambil semua ID anggota dari database
         $anggotaIds = Anggota::pluck('id')->toArray();

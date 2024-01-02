@@ -20,14 +20,18 @@ Route::middleware('auth')->group(function () {
 
     Route::name('peminjaman')->prefix('peminjaman')->group(function () {
         Route::get('/', [App\Http\Controllers\PeminjamanController::class, 'index'])->name('.index');
+        Route::post('/', [App\Http\Controllers\PeminjamanController::class, 'index']);
         Route::get('/tambah', [App\Http\Controllers\PeminjamanController::class, 'tambah'])->name('.tambah');
         Route::post('/tambah', [App\Http\Controllers\PeminjamanController::class, 'store']);
+        Route::get('/kurang', [App\Http\Controllers\PeminjamanController::class, 'kurang'])->name('.kurang');
+        Route::post('/kurang', [App\Http\Controllers\PeminjamanController::class, 'pull']);
         Route::get('/ubah/{id}', [App\Http\Controllers\PeminjamanController::class, 'ubah'])->name('.ubah');
         Route::post('/ubah/{id}', [App\Http\Controllers\PeminjamanController::class, 'update']);
         Route::get('/hapus/{id}', [App\Http\Controllers\PeminjamanController::class, 'hapus'])->name('.hapus');
         Route::post('/status', [App\Http\Controllers\PeminjamanController::class, 'status'])->name('.status');
 
         Route::post('/anggota', [App\Http\Controllers\PeminjamanController::class, 'anggota'])->name('.anggota');
+        Route::post('/anggotap', [App\Http\Controllers\PeminjamanController::class, 'anggotap'])->name('.anggotap');
         Route::post('/buku', [App\Http\Controllers\PeminjamanController::class, 'buku'])->name('.buku');
     });
 

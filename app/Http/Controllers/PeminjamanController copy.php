@@ -9,32 +9,10 @@ use App\Models\Anggota;
 
 class PeminjamanController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $status = $request->status;
-        $judul = $request->judul;
-        $nama = $request->nama;
-        $tanggalPinjam = $request->tanggal_pinjam;
-        $tanggalKembali = $request->tanggal_kembali;
-
-        $peminjaman = Peminjaman::query();
-
-        if ($status) $peminjaman->where('status', $status);
-        if ($judul) $peminjaman->whereHas('buku', function ($query) use ($judul) {
-            $query->where('judul', 'like', '%' . $judul . '%');
-        });
-        if ($nama) $peminjaman->whereHas('anggota', function ($query) use ($peminjaman) {
-            $query->where('nama', 'like', '%' . $peminjaman . '%');
-        });
-        if ($tanggalPinjam) $peminjaman->whereDate('tanggal_pinjam', $tanggalPinjam);
-        if ($tanggalKembali) $peminjaman->whereDate('tanggal_kembali', $tanggalKembali);
-
-        // Ambil data peminjaman berdasarkan filter (jika ada)
-        $dataPeminjaman = $peminjaman->get();
-        return view('peminjaman.index', [
-            'peminjaman' => $dataPeminjaman,
-            'request' => $request->input(),
-        ]);
+        $peminjaman = Peminjaman::all();
+        return view('peminjaman.index', compact('peminjaman'));
     }
 
     public function tambah()
@@ -69,6 +47,29 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan.');
     }
 
+    public function kurang()
+    {
+        $buku = Buku::all();
+        $anggota = Anggota::all();
+        return view('peminjaman.kurang', compact('buku', 'anggota'));
+    }
+
+    public function pull(Request $request)
+    {
+        $anggota =  Anggota::where('nomor_identitas', $request->nomor_identitas)->first();
+        foreach ($request->buku_id as $v) {
+            $data = Peminjaman::where('buku_id', $v)->where('anggota_id', $anggota->id)->first();
+            dump($data);
+            // if ($data) {
+            //     // $data->status = "Di Kembalikan";
+            //     // $data->tanggal_terima = date("Y-m-d");
+            //     // $data->save();
+            // }
+        }
+
+        die;
+        // return redirect()->route('peminjaman.index')->with('success', 'Berhasil mengembalikan buku');
+    }
 
 
     public function ubah($id)
@@ -107,30 +108,6 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil dihapus.');
     }
 
-    public function kurang()
-    {
-        $buku = Buku::all();
-        $anggota = Anggota::all();
-        return view('peminjaman.kurang', compact('buku', 'anggota'));
-    }
-
-    public function pull(Request $request)
-    {
-        if (!$request->buku_id) {
-            return redirect()->back()->with('failed', 'Buku tidak ditemukan');
-        }
-        foreach ($request->buku_id as $v) {
-            $data = Peminjaman::where('buku_id', $v)->where('anggota_id', $request->anggota_id)->first();
-            if ($data) {
-                $data->status = "Di Kembalikan";
-                $data->tanggal_terima = date("Y-m-d");
-                $data->save();
-            }
-        }
-
-        return redirect()->route('peminjaman.index')->with('success', 'Berhasil mengembalikan buku');
-    }
-
     public function status(Request $request)
     {
         $data = Peminjaman::find($request->id);
@@ -152,23 +129,8 @@ class PeminjamanController extends Controller
         if (!$anggota) {
             return response()->json(['message' => 'Data anggota tidak ditemukan']);
         } else {
-            return response()->json($anggota);
-        }
-    }
-
-    public function anggotap(Request $request)
-    {
-        $anggota = Anggota::where('nomor_identitas', $request->nomor_identitas)->first();
-
-        if (!$anggota) {
-            return response()->json(['message' => 'Data anggota tidak ditemukan']);
-        } else {
-            $peminjam = Peminjaman::where('anggota_id', $anggota->id)->where('status', 'Di Pinjam')->with('anggota')->with('buku')->get();
-            if (!$peminjam->count()) {
-                return response()->json(['message' => 'Data anggota tidak ditemukan']);
-            } else {
-                return response()->json($peminjam);
-            }
+            $peminjam = Peminjaman::where('anggota_id', $anggota->id)->with('anggota')->with('buku')->get();
+            return response()->json($peminjam);
         }
     }
 

@@ -45,6 +45,23 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <!-- Data Table -->
     <link href="{{asset('/')}}/assets/DataTables/datatables.min.css" rel="stylesheet">
+    <style>
+        /* Style untuk tombol DataTables Buttons */
+        .dt-buttons {
+            float: left;
+        }
+    
+        /* Ganti warna tombol menjadi hijau */
+        /* .buttons-excel {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            border-radius: 4px;
+        } */
+    </style>
+    
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="{{asset('/')}}/assets/css/style.css">
 </head>
@@ -250,9 +267,9 @@
                                 </div>
                             </div>
                             <div class="p-15 p-b-0">
-                                <form class="form-material">
+                                <form class="form-material" method="POST" action="{{route('peminjaman.index')}}">@csrf
                                     <div class="form-group form-primary">
-                                        <input type="text" name="nama" class="form-control" required="">
+                                        <input type="text" name="judul" class="form-control" required="">
                                         <span class="form-bar"></span>
                                         <label class="float-label"><i class="fa fa-search m-r-10"></i>Cari Buku</label>
                                     </div>
@@ -373,7 +390,19 @@
     <!-- Data Table -->
     <script src="{{asset('/')}}/assets/DataTables/datatables.min.js"></script>
     <script>
-        new DataTable('#example');
+        $(document).ready(function() {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    {
+                        extend: 'excel',
+                        className: 'buttons-excel btn-outline-success btn-sm', // Tambahkan class 'btn-sm' untuk ukuran kecil
+                        text: '<i class="fa fa-file-excel-o"></i> Export ke File Excel',
+                    },
+                    // Sisanya disesuaikan dengan kebutuhan Anda
+                ]
+            });
+        });
     </script>
     <!-- custom js -->
     <script type="text/javascript" src="{{asset('/')}}/assets/pages/dashboard/custom-dashboard.js"></script>

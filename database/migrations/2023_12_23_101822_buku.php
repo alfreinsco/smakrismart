@@ -10,6 +10,7 @@ return new class extends Migration
     {
         Schema::create('buku', function (Blueprint $table) {
             $table->id();
+            $table->string('kode')->unique();
             $table->string('judul');
             $table->string('pengarang');
             $table->unsignedBigInteger('kategori_id');

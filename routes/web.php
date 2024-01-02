@@ -27,8 +27,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/ubah/{id}', [App\Http\Controllers\PeminjamanController::class, 'ubah'])->name('.ubah');
         Route::post('/ubah/{id}', [App\Http\Controllers\PeminjamanController::class, 'update']);
         Route::get('/hapus/{id}', [App\Http\Controllers\PeminjamanController::class, 'hapus'])->name('.hapus');
+        Route::post('/status', [App\Http\Controllers\PeminjamanController::class, 'status'])->name('.status');
 
         Route::post('/anggota', [App\Http\Controllers\PeminjamanController::class, 'anggota'])->name('.anggota');
+        Route::post('/buku', [App\Http\Controllers\PeminjamanController::class, 'buku'])->name('.buku');
     });
 
     Route::name('anggota')->prefix('anggota')->group(function () {

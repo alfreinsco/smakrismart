@@ -66,7 +66,11 @@
                                                     <tr>
                                                         <td>{{ $K + 1 }}</td>
                                                         <td>
-                                                            <img width="30" height="30" src="{{ asset('storage/' . $v->foto) }}" alt="Foto" style="max-width: 100px;">
+                                                            @if ($v->foto)                                                                
+                                                                <img width="30" height="30" src="{{ asset('storage/' . $v->foto) }}" alt="Foto" style="max-width: 100px;">
+                                                            @else
+                                                                <img width="30" height="30" src="{{ asset('assets/images/kuser.png') }}" alt="Foto" style="max-width: 100px;">
+                                                            @endif
                                                         </td>
                                                         <td>{{ $v->nama }}</td>
                                                         <td>{{ $v->nomor_identitas }}</td>

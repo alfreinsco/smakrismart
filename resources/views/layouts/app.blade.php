@@ -161,41 +161,48 @@
                                 </a>
                                 <ul class="show-notification">
                                     <li>
-                                        <h6>Notifications</h6>
-                                        <label class="label label-danger">New</label>
+                                        <h6>Pemberitahuan</h6>
+                                        <label class="label label-danger">Baru</label>
                                     </li>
-                                    <li class="waves-effect waves-light">
-                                        <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{{asset('/')}}/assets/images/avatar-2.jpg" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">{{@Auth::user()->nama}}</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="waves-effect waves-light">
-                                        <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{{asset('/')}}/assets/images/user.png" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Joseph William</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="waves-effect waves-light">
-                                        <div class="media">
-                                            <img class="d-flex align-self-center img-radius" src="{{asset('/')}}/assets/images/avatar-3.jpg" alt="Generic placeholder image">
-                                            <div class="media-body">
-                                                <h5 class="notification-user">Sara Soudein</h5>
-                                                <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                                <span class="notification-time">30 minutes ago</span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    <li id="notification-list"></li>
                                 </ul>
                             </li>
+                            <script>
+                                function ambilNotifikasi() {
+                                $.ajax({
+                                    url: '{{ route('peminjaman.api') }}',
+                                    method: 'GET',
+                                    dataType: 'json',
+                                    success: function(response) {
+                                        // Mengosongkan list sebelum menambahkan data baru
+                                        $('#notification-list').empty();
+
+                                        response.forEach(function(item) {
+                                            var listItem = '<li class="waves-effect waves-light">' +
+                                                '<div class="media">' +
+                                                '<img class="d-flex align-self-center img-radius" src="{{ asset("/assets/images/kuser.png") }}" alt="Generic placeholder image">' +
+                                                '<div class="media-body">' +
+                                                '<h5 class="notification-user">' + item.anggota.nama + '</h5>' +
+                                                '<p class="notification-msg">Belum mengembalikan buku <code>' + item.buku.judul + '</code>.</p>' +
+                                                '<span class="notification-time">Terlambat ' + item.selisih_tanggal + '</span>' +
+                                                '</div>' +
+                                                '</div>' +
+                                                '</li>';
+
+                                            $('#notification-list').append(listItem);
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error(error);
+                                    }
+                                });
+                            }
+                            ambilNotifikasi();
+
+                            // Panggil fungsi AJAX setiap 5 detik (misalnya)
+                            setInterval(ambilNotifikasi, 5000); // Ubah 5000 menjadi interval yang Anda inginkan dalam milidetik
+
+                            </script>
                             <li class="user-profile header-notification">
                                 <a href="#!" class="waves-effect waves-light">
                                     <img src="{{asset('/')}}/assets/images/user.png" class="img-radius" alt="User-Profile-Image">
@@ -203,11 +210,11 @@
                                     <i class="ti-angle-down"></i>
                                 </a>
                                 <ul class="show-notification profile-notification">
-                                    <li class="waves-effect waves-light">
+                                    {{-- <li class="waves-effect waves-light">
                                         <a href="{{url('/')}}">
                                             <i class="ti-user"></i> Profil
                                         </a>
-                                    </li>
+                                    </li> --}}
                                     <li class="waves-effect waves-light">
                                         <a href="{{route('logout')}}">
                                             <i class="ti-layout-sidebar-left"></i> Logout
@@ -236,7 +243,7 @@
                                 <div class="main-menu-content">
                                     <ul>
                                         <li class="more-details">
-                                            <a href="{{url('/')}}"><i class="ti-user"></i>Profil</a>
+                                            {{-- <a href="{{url('/')}}"><i class="ti-user"></i>Profil</a> --}}
                                             <a href="{{route('logout')}}"><i class="ti-layout-sidebar-left"></i>Logout</a>
                                         </li>
                                     </ul>
@@ -304,13 +311,13 @@
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{url('/')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-exchange"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Usulan Koleksi</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li class="{{ request()->routeIs('pengguna.*') ? 'active' : '' }}">
                                     <a href="{{route('pengguna.index')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-users"></i></span>

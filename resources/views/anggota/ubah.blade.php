@@ -195,9 +195,12 @@
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Desain Kartu Anggota</h5>
+                                <div class="d-flex justify-content-between">
+                                    <h5>Desain Kartu Anggota</h5>
+                                    <button class="btn btn-primary btn-sm" type="button" onclick="downloadDivAsImage()"><i class="fa fa-print"></i></button>
+                                </div>
                             </div>
-                            <div class="card-block"> 
+                            <div class="card-block" id="divUntukDiunduh"> 
                                 
                                 <div class="d-flex justify-content-center align-items-center">                                         
                                     <div class="border border-secondary" style="border-radius: 0; width: 340px; height: 207px; background-image: url({{asset('assets/images/bg_depan.jpg')}})">
@@ -213,7 +216,11 @@
                                                 <hr class="m-0">
                                             </div>
                                             <div class="col-3 text-right px-0" style="position: relative">
-                                                <img id="preview" style="margin-left: 30px;" class="border" width="60px" height="60px" style="border-radius: 10px" src="{{asset('storage/' . $anggota->foto)}}" alt="Foto">
+                                                @if ($anggota->foto)                                                    
+                                                    <img id="preview" style="margin-left: 30px;" class="border" width="60px" height="60px" style="border-radius: 10px" src="{{asset('storage/' . $anggota->foto)}}" alt="Foto">
+                                                @else
+                                                    <img id="preview" style="margin-left: 30px;" class="border" width="60px" height="60px" style="border-radius: 10px" src="{{ asset('assets/images/kuser.png') }}" alt="Foto">   
+                                                @endif
                                                 <div id="kodeBatangContainer" style="position: absolute; margin: 10px 0 0 30px; height: 20px;"></div>
                                             </div>
                                             <div class="col-8">
@@ -266,6 +273,28 @@
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            function downloadDivAsImage() {
+                                // Mengambil referensi elemen div yang ingin diunduh
+                                const divToDownload = document.getElementById('divUntukDiunduh');
+
+                                // Menggunakan html2canvas untuk mengonversi elemen div menjadi gambar
+                                html2canvas(divToDownload).then(function(canvas) {
+                                    // Mengonversi canvas menjadi data URL gambar PNG
+                                    const imgData = canvas.toDataURL('image/png');
+
+                                    // Membuat link unduhan
+                                    const link = document.createElement('a');
+                                    link.download = '{{$anggota->nama . $anggota->nomor_identitas}}.png'; // Nama file yang akan diunduh
+                                    link.href = imgData;
+                                    
+                                    // Menambahkan link ke dalam dokumen dan mengkliknya secara otomatis untuk memicu unduhan
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                });
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

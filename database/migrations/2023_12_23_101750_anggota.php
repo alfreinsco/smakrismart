@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nomor_telepon');
             $table->string('jabatan');
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
-            $table->enum('status', ['Aktif', 'Tidak Aktif']);
+            $table->enum('status', ['Aktif', 'Tidak Aktif'])->default('Aktif');
             $table->string('alamat');
             $table->string('foto')->nullable();
             $table->timestamps();

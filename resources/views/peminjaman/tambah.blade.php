@@ -29,7 +29,25 @@
             <div class="page-wrapper">
                 <!-- Page-body start -->
                 <div class="page-body">
-                    <form method="POST" action="{{route('peminjaman.tambah')}}" class="row justify-content-center">@csrf
+                    <script>
+                        $(document).ready(function() {
+                            $('#btnPeminjaman').on('click', function(event) {
+                            var tanggalPinjam = $('input[name="tanggal_pinjam"]').val();
+                            var tanggalKembali = $('input[name="tanggal_kembali"]').val();
+                            var nomorIdentitas = $('input[name="nomor_identitas"]').val();
+                            var bukuId = $('input[name="buku_id"]').val();
+
+                            if (!tanggalPinjam || !tanggalKembali || !nomorIdentitas || !bukuId || bukuId === '[]') {
+                                event.preventDefault(); // Mencegah submit jika formulir tidak valid
+                                alert('Tolong isi semua kolom!');
+                            } else {
+                                $('#postPeminjaman').submit();
+                            }
+                        });
+
+                        });
+                    </script>
+                    <form id="postPeminjaman" method="POST" action="{{route('peminjaman.tambah')}}" class="row justify-content-center">@csrf
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -41,7 +59,7 @@
                                         <div>
                                             <a href="{{route('pengguna.index')}}" class="btn btn-warning btn-sm"><i class="fa fa-backward"></i> Kembali</a>
                                             <button class="btn btn-danger btn-sm" type="reset"><i class="fa fa-trash"></i> Reset</button>
-                                            <button class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Simpan</button>
+                                            <button id="btnPeminjaman" class="btn btn-primary btn-sm" type="button"><i class="fa fa-save"></i> Simpan</button>
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +126,11 @@
                                                             $('#nama').val(response.nama);
                                                             $('#jabatan').val(response.jabatan);
                                                             $('#jenis_kelamin').val(response.jenis_kelamin);
-                                                            $('#foto').attr('src', "{{asset('storage/')}}/" + response.foto);
+                                                            if(response.foto){
+                                                                $('#foto').attr('src', "{{asset('storage/')}}/" + response.foto);
+                                                            }else{
+                                                                $('#foto').attr('src', "{{ asset('assets/images/kuser.png') }}");
+                                                            }
                                                         }
                                                     },
                                                     error: function(error) {
@@ -141,38 +163,96 @@
                                     <span>Data buku yang di pinjam dari perpustakaan</span>
                                 </div>
                                 <div class="card-block table-border-style">
-                                    <div class="form-group mb-3">
-                                        <div class="d-flex justify-content-between">                                            
-                                            <label>ID Buku</label>
-                                            <div>
-                                                <button type="button" class="btn btn-primary btn-mini add-btn">Tambah</button>
-                                            </div>
-                                        </div>
-                                        <input type="text" name="buku_id[]" class="form-control" autofocus>
+                                    <div class="form-group mb-3">                  
+                                        <label>ID Buku</label>
+                                        <input type="text" id="buku_id" class="form-control" autofocus>
+                                        <input type="hidden" name="buku_id" id="id_buku" class="form-control">
+                                    </div>
+                                    <div class="w-100 table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Judul Buku</th>
+                                                    <th>Pengarang</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tabel_buku">
+
+                                            </tbody>
+                                        </table>
                                     </div>
                                     <script>
                                         $(document).ready(function() {
-                                            // Fungsi untuk menambahkan form-group baru saat tombol "Tambah" ditekan
-                                            $(document).on('click', '.add-btn', function() {
-                                                let template = `
-                                                    <div class="form-group mb-3">
-                                                        <div class="d-flex justify-content-between">                                            
-                                                            <label>ID Buku</label>
-                                                            <div>
-                                                                <button type="button" class="btn btn-danger btn-mini delete-btn">Hapus</button>
-                                                                <button type="button" class="btn btn-primary btn-mini add-btn">Tambah</button>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" name="buku_id[]" class="form-control" autofocus>
-                                                    </div>
-                                                `;
+                                            // Fungsi untuk memeriksa apakah ID sudah ada dalam tabel atau belum
+                                            function isIdExist(id) {
+                                                var existingIds = []; // Simpan ID yang sudah ada dalam array
 
-                                                $(this).closest('.form-group').after(template);
+                                                // Loop untuk mendapatkan semua ID yang sudah ada dalam tabel
+                                                $('#tabel_buku tr').each(function() {
+                                                    existingIds.push(parseInt($(this).find('td:first').text())); // Ambil ID dan simpan dalam array
+                                                });
+
+                                                // Periksa apakah ID sudah ada dalam array existingIds
+                                                return existingIds.includes(id);
+                                            }
+
+                                            function ambilIdTabel(){
+                                                var bukuIds = []; // Array untuk menyimpan semua ID buku
+
+                                                // Ambil semua ID dari tabel dan simpan ke dalam array
+                                                $("#tabel_buku tr").each(function() {
+                                                    var id = $(this).find("td:first").text(); // Mengambil ID dari kolom pertama
+                                                    bukuIds.push(id); // Menambahkan ID ke dalam array
+                                                });
+                                                
+                                                return bukuIds;
+                                            }
+
+                                            $(document).on('click', '.hapusThisTR', function() {
+                                                $(this).closest('tr').remove();
+                                                $("#id_buku").val(JSON.stringify(ambilIdTabel()));
+                                                $('#buku_id').focus();
                                             });
-                                    
-                                            // Fungsi untuk menghapus form-group saat tombol "Hapus" ditekan
-                                            $(document).on('click', '.delete-btn', function() {
-                                                $(this).closest('.form-group').remove(); // Hapus form-group yang terdekat
+                                            $('#buku_id').on('keyup', function() {
+                                                var buku_id = $(this).val();
+                                                
+                                                // Kirim permintaan AJAX
+                                                $.ajax({
+                                                    type: 'POST',
+                                                    url: "{{ route('peminjaman.buku') }}",
+                                                    data: {
+                                                        '_token': '{{ csrf_token() }}',
+                                                        'buku_id': buku_id
+                                                    },
+                                                    dataType: 'json',
+                                                    success: function(response) {
+                                                        // Jika ID belum ada dalam tabel, tambahkan baris baru
+                                                        if(typeof response === 'object' && Object.keys(response).length > 0){
+                                                            if (!isIdExist(response.id)) {
+                                                                var newRow = 
+                                                                "<tr>" +
+                                                                    "<td>" + response.id + "</td>" +
+                                                                    "<td>" + response.judul + "</td>" +
+                                                                    "<td>" + response.pengarang + "</td>" +
+                                                                    "<td><button class='btn btn-danger btn-mini hapusThisTR' type='button'><i class='fa fa-trash'></i></button></td>" +
+                                                                "</tr>";
+                                                                    
+                                                                // Tambahkan baris baru ke dalam tabel
+                                                                $("#tabel_buku").append(newRow);
+                                                                
+                                                                $("#id_buku").val(JSON.stringify(ambilIdTabel()));
+                                                                $('#buku_id').val('');
+                                                                $('#buku_id').focus();
+                                                            }
+                                                        }
+                                                    },
+                                                    error: function(error) {
+                                                        // Tampilkan pesan error atau lakukan penanganan error
+                                                        console.log('Terjadi kesalahan:', error);
+                                                    }
+                                                });
                                             });
                                         });
                                     </script>

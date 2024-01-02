@@ -50,6 +50,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
+                                                    <th>Kode Buku</th>
                                                     <th>Judul Buku</th>
                                                     <th>Pengarang</th>
                                                     <th>Kategori</th>
@@ -60,6 +61,7 @@
                                                 @foreach($buku as $K => $v)
                                                     <tr>
                                                         <td>{{ $K + 1 }}</td>
+                                                        <td>{{$v->kode}}</td>
                                                         <td>{{ $v->judul }}</td>
                                                         <td>{{ $v->pengarang }}</td>
                                                         <td>{{ @$v->kategori->nama }}</td>

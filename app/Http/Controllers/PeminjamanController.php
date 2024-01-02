@@ -24,26 +24,29 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'buku_id[]' => 'required|exists:buku,id',
-            'nomor_identitas' => 'required|exists:anggota,nomor_identitas',
-            'tanggal_pinjam' => 'required|date',
-            'tanggal_kembali' => 'required|date|after:tanggal_pinjam',
-        ]);
+        $bukuIds = json_decode($request->buku_id);
 
-        $anggota_id = Anggota::where('nomor_identitas', $request->nomor_identitas)->first();
+        if (!is_array($bukuIds)) {
+            return redirect()->back()->with('error', 'Format buku_id tidak valid.');
+        }
 
-        foreach ($request->buku_id as $v) {
-            $v = new Peminjaman();
-            $v->buku_id = $request->buku_id;
-            $v->anggota_id = $request->anggota_id;
-            $v->tanggal_pinjam = $request->tanggal_pinjam;
-            $v->tanggal_kembali = $request->tanggal_kembali;
-            $v->save();
+        $anggota_id = Anggota::where('nomor_identitas', $request->nomor_identitas)->first()->id;
+
+        foreach ($bukuIds as $bukuId) {
+            if (Peminjaman::where('buku_id', $bukuId)->where('anggota_id', $anggota_id)->exists()) {
+                continue;
+            }
+            $data = new Peminjaman();
+            $data->buku_id = $bukuId;
+            $data->anggota_id = $anggota_id;
+            $data->tanggal_pinjam = $request->tanggal_pinjam;
+            $data->tanggal_kembali = $request->tanggal_kembali;
+            $data->save();
         }
 
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil ditambahkan.');
     }
+
 
 
     public function ubah($id)
@@ -82,6 +85,20 @@ class PeminjamanController extends Controller
         return redirect()->route('peminjaman.index')->with('success', 'Peminjaman berhasil dihapus.');
     }
 
+    public function status(Request $request)
+    {
+        $data = Peminjaman::find($request->id);
+        if ($request->status == "Di Kembalikan") {
+            $data->tanggal_terima = date("Y-m-d");
+        } else {
+            $data->tanggal_terima = null;
+        }
+        $data->status = $request->status;
+        $data->save();
+
+        return redirect()->route('peminjaman.index')->with('success', 'Status berhasil di ubah.');
+    }
+
     public function anggota(Request $request)
     {
         $anggota = Anggota::where('nomor_identitas', $request->nomor_identitas)->first();
@@ -91,5 +108,12 @@ class PeminjamanController extends Controller
         } else {
             return response()->json($anggota);
         }
+    }
+
+    public function buku(Request $request)
+    {
+        $buku = Buku::where('kode', $request->buku_id)->first();
+
+        return response()->json($buku);
     }
 }

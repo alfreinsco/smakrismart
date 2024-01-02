@@ -118,7 +118,7 @@
                                                             rows += '<tr>' +
                                                                 '<td><input type="checkbox" class="buku_id" data-kode="' + item.buku.kode + '" name="buku_id[]" value="' + item.buku.id + '"></td>' +
                                                                 '<td>' + item.buku.judul + '</td>' +
-                                                                '<td>' + item.buku.kode + '</td>' +
+                                                                '<td>' + item.buku.pengarang + '</td>' +
                                                                 '<td></td>' +
                                                                 '</tr>';
                                                             });

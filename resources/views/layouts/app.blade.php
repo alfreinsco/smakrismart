@@ -133,11 +133,11 @@
                         <div class="mobile-search waves-effect waves-light">
                             <div class="header-search">
                                 <div class="main-search morphsearch-search">
-                                    <div class="input-group">
+                                    <form method="post" action="{{route('peminjaman.index')}}" class="input-group">@csrf
                                         <span class="input-group-addon search-close"><i class="ti-close"></i></span>
-                                        <input type="text" class="form-control" placeholder="Enter Keyword">
+                                        <input type="text" name="judul" class="form-control" placeholder="Enter Keyword">
                                         <span class="input-group-addon search-btn"><i class="ti-search"></i></span>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +159,9 @@
                                 <div class="main-search morphsearch-search">
                                     <div class="input-group">
                                         <span class="input-group-addon search-close"><i class="ti-close"></i></span>
-                                        <input type="text" class="form-control">
+                                        <form method="post" action="{{route('peminjaman.index')}}">@csrf
+                                            <input type="text" class="form-control" name="judul">
+                                        </form>
                                         <span class="input-group-addon search-btn"><i class="ti-search"></i></span>
                                     </div>
                                 </div>

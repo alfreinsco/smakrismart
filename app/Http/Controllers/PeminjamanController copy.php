@@ -11,7 +11,7 @@ class PeminjamanController extends Controller
 {
     public function index()
     {
-        $peminjaman = Peminjaman::all();
+        $peminjaman = Peminjaman::orderBy('tanggal_pengembalian', 'ASC')->get();
         return view('peminjaman.index', compact('peminjaman'));
     }
 

@@ -10,7 +10,7 @@ class BukuController extends Controller
 {
     public function index()
     {
-        $buku = Buku::all();
+        $buku = Buku::orderBy('judul', 'ASC')->get();
         return view('buku.index', compact('buku'));
     }
 

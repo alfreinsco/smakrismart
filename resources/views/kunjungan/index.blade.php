@@ -80,6 +80,7 @@
                                                     <th>Jabatan</th>
                                                     <th>Nomor Identitas</th>
                                                     <th>Jenis Kelamin</th>
+                                                    <th>Waktu Kunjung</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -98,6 +99,7 @@
                                                         <td>{{ $v->anggota->jabatan }}</td>
                                                         <td>{{ $v->anggota->nomor_identitas }}</td>
                                                         <td>{{ $v->anggota->jenis_kelamin }}</td>
+                                                        <td>{{ $v->waktu_kunjung }}</td>
                                                         <td>
                                                             <div class="dropdown-primary dropdown open">
                                                                 <button class="btn btn-primary btn-mini dropdown-toggle waves-light" type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>

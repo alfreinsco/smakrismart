@@ -11,7 +11,7 @@ class KunjunganController extends Controller
 {
     public function index()
     {
-        $kunjungan = Kunjungan::all();
+        $kunjungan = Kunjungan::orderBy('waktu_kunjung', 'DESC')->get();
         return view('kunjungan.index', compact('kunjungan'));
     }
 

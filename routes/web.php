@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->group(function () {
+Route::get('/', [App\Http\Controllers\DashboardController::class, 'home'])->name('home');
+Route::get('/buku', [App\Http\Controllers\DashboardController::class, 'buku'])->name('buku');
+Route::post('/buku', [App\Http\Controllers\DashboardController::class, 'buku']);
+
+Route::middleware('auth')->prefix('Admin')->group(function () {
 
     Route::get('/', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 

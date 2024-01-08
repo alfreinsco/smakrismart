@@ -54,6 +54,7 @@
                                                     <th>Judul Buku</th>
                                                     <th>Pengarang</th>
                                                     <th>Kategori</th>
+                                                    <th>Kode Batang</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
@@ -65,6 +66,7 @@
                                                         <td>{{ $v->judul }}</td>
                                                         <td>{{ $v->pengarang }}</td>
                                                         <td>{{ @$v->kategori->nama }}</td>
+                                                        <td class="kodeQr" data-nama="{{$v->kode}}">{!!DNS1D::getBarcodeHTML($v->kode, 'C39', 1, 30)!!}</td>
                                                         <td>
                                                             <div class="dropdown-primary dropdown open">
                                                                 <button class="btn btn-primary btn-mini dropdown-toggle waves-light" type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>
@@ -78,6 +80,33 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
+                                        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script> --}}
+                                        <script>
+                                            $(document).ready(function(){
+                                                function downloadDivAsImage(elemen, nama) {
+                                                    // Menggunakan html2canvas untuk mengonversi elemen menjadi gambar
+                                                    html2canvas(elemen).then(function (canvas) {
+                                                        // Mengonversi canvas menjadi data URL gambar PNG
+                                                        const imgData = canvas.toDataURL('image/png');
+                                        
+                                                        // Membuat link unduhan
+                                                        const link = document.createElement('a');
+                                                        link.download = nama + '.png'; // Nama file yang akan diunduh
+                                                        link.href = imgData;
+                                        
+                                                        // Menambahkan link ke dalam dokumen dan mengkliknya secara otomatis untuk memicu unduhan
+                                                        document.body.appendChild(link);
+                                                        link.click();
+                                                        document.body.removeChild(link);
+                                                    });
+                                                }
+                                        
+                                                // Contoh penggunaan pada elemen tertentu dengan class "kodeQr"
+                                                $('.kodeQr').on('click', function() {
+                                                    downloadDivAsImage(this, $(this).data('nama'));
+                                                });
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                             </div>

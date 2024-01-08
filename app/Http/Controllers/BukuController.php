@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\Kategori;
+use Milon\Barcode\Facades\DNS1DFacade as DNS1D;
 
 class BukuController extends Controller
 {
     public function index()
     {
         $buku = Buku::orderBy('judul', 'ASC')->get();
-        return view('buku.index', compact('buku'));
+        return view('buku.index', [
+            'buku' => $buku
+        ]);
     }
 
     public function tambah()

@@ -230,7 +230,7 @@
                                 </a>
                                 <ul class="show-notification profile-notification">
                                     {{-- <li class="waves-effect waves-light">
-                                        <a href="{{url('/')}}">
+                                        <a href="{{route('dashboard')}}">
                                             <i class="ti-user"></i> Profil
                                         </a>
                                     </li> --}}
@@ -262,7 +262,7 @@
                                 <div class="main-menu-content">
                                     <ul>
                                         <li class="more-details">
-                                            {{-- <a href="{{url('/')}}"><i class="ti-user"></i>Profil</a> --}}
+                                            {{-- <a href="{{route('dashboard')}}"><i class="ti-user"></i>Profil</a> --}}
                                             <a href="{{route('logout')}}"><i class="ti-layout-sidebar-left"></i>Logout</a>
                                         </li>
                                     </ul>
@@ -280,7 +280,7 @@
                             <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                                    <a href="{{url('/')}}" class="waves-effect waves-dark">
+                                    <a href="{{route('dashboard')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-home"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
@@ -331,7 +331,7 @@
                                     </a>
                                 </li>
                                 {{-- <li>
-                                    <a href="{{url('/')}}" class="waves-effect waves-dark">
+                                    <a href="{{route('dashboard')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-exchange"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Usulan Koleksi</span>
                                         <span class="pcoded-mcaret"></span>
@@ -394,11 +394,15 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                dom: 'Bfrtip',
+                dom: 'lBfrtip', // Menambahkan 'l' untuk menampilkan lengthMenu
+                lengthMenu: [
+                    [10, 25, 50, -1], // Opsi jumlah data yang tampil
+                    ['10 Baris', '25 Baris', '50 Baris', 'Semua'] // Label untuk opsi jumlah data
+                ],
                 buttons: [
                     {
                         extend: 'excel',
-                        className: 'buttons-excel btn-outline-success btn-sm', // Tambahkan class 'btn-sm' untuk ukuran kecil
+                        className: 'buttons-excel btn-outline-success btn-sm',
                         text: '<i class="fa fa-file-excel-o"></i> Export ke File Excel',
                     },
                     // Sisanya disesuaikan dengan kebutuhan Anda

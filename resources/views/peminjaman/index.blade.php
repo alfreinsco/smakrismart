@@ -106,6 +106,7 @@
                                                 <th>Tanggal Peminjaman</th>
                                                 <th>Tanggal Pengembalian</th>
                                                 <th>Keterangan</th>
+                                                <th>Estimasi Peminjaman</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -144,6 +145,7 @@
 
                                                     @endif
                                                 </td>
+                                                <td class="text-info">Maksimal Peminjaman 3 Hari</td>
                                                 <td>
                                                     <div class="dropdown-primary dropdown open">
                                                         <button class="btn btn-primary btn-mini dropdown-toggle waves-light" type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>

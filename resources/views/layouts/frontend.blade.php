@@ -43,6 +43,7 @@
 </head>
 <body class="host_version"> 
 
+    @auth
 	<!-- Modal -->
 	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -87,6 +88,7 @@
 		</div>
 	  </div>
 	</div>
+    @endauth
 
     @if ($errors->any())
         <script>

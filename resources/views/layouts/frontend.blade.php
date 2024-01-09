@@ -43,7 +43,7 @@
 </head>
 <body class="host_version"> 
 
-    @auth
+    @guest
 	<!-- Modal -->
 	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -168,7 +168,7 @@
         <div class="container">
             <div class="footer-distributed">
                 <div class="footer-center">                   
-                    <p class="footer-company-name">All Rights Reserved. &copy; 2023 <a href="#">{{config('app.name')}}</a> Design By : <a href="https://wa.me/6281318812027">Marthin Alfreinsco Salakory</a></p>
+                    <p class="footer-company-name">All Rights Reserved. &copy; 2023 <a href="#">{{config('app.name')}}</a></p>
                 </div>
             </div>
         </div><!-- end container -->

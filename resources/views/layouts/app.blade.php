@@ -394,11 +394,15 @@
     <script>
         $(document).ready(function() {
             $('#example').DataTable({
-                dom: 'Bfrtip',
+                dom: 'lBfrtip', // Menambahkan 'l' untuk menampilkan lengthMenu
+                lengthMenu: [
+                    [10, 25, 50, -1], // Opsi jumlah data yang tampil
+                    ['10 Baris', '25 Baris', '50 Baris', 'Semua'] // Label untuk opsi jumlah data
+                ],
                 buttons: [
                     {
                         extend: 'excel',
-                        className: 'buttons-excel btn-outline-success btn-sm', // Tambahkan class 'btn-sm' untuk ukuran kecil
+                        className: 'buttons-excel btn-outline-success btn-sm',
                         text: '<i class="fa fa-file-excel-o"></i> Export ke File Excel',
                     },
                     // Sisanya disesuaikan dengan kebutuhan Anda

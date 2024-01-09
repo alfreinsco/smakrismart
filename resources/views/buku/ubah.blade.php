@@ -42,10 +42,73 @@
                             <div class="card-block">
                                 <form class="form-material" action="{{route('buku.ubah', $buku->id)}}" method="POST" enctype="multipart/form-data">@csrf
                                     <div class="form-group form-default">
+                                        <input type="text" name="kode" id="kodeInput" class="form-control @error('kode') is-invalid @enderror"  maxlength="8" value="{{old('kode') ?? ($buku->kode ?? '')}}" required>
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Kode Buku <span class="text-danger">*</span></label>
+                                        @error('kode')
+                                        <div class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        @enderror
+                                    </div>                                    
+                                    <script>
+                                        document.getElementById('kodeInput').addEventListener('input', function (e) {
+                                            let inputValue = e.target.value.replace(/\D/g, '');
+                                            if (inputValue.length > 3) {
+                                                inputValue = inputValue.slice(0, 3) + '-' + inputValue.slice(3);
+                                            }
+                                            if (inputValue.length > 8) {
+                                                inputValue = inputValue.slice(0, 8);
+                                            }
+                                            e.target.value = inputValue;
+                                        });
+                                    </script>
+
+                                    <div class="form-group form-default">
                                         <input type="text" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{old('judul') ?? ($buku->judul ?? '')}}" required>
                                         <span class="form-bar"></span>
                                         <label class="float-label">Judul Buku <span class="text-danger">*</span></label>
                                         @error('judul')
+                                        <div class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group form-default">
+                                        <input type="text" name="penerbit" class="form-control @error('penerbit') is-invalid @enderror" value="{{old('penerbit') ?? ($buku->penerbit ?? '')}}" required>
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Nama Penerbit <span class="text-danger">*</span></label>
+                                        @error('penerbit')
+                                        <div class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group form-default">
+                                        <input type="text" name="kota" class="form-control @error('kota') is-invalid @enderror" value="{{old('kota') ?? ($buku->kota ?? '')}}" required>
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Kota <span class="text-danger">*</span></label>
+                                        @error('kota')
+                                        <div class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group form-default">
+                                        <input type="text" name="tahun" class="form-control @error('tahun') is-invalid @enderror" value="{{old('tahun') ?? ($buku->tahun ?? '')}}" required>
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Tahun Terbit <span class="text-danger">*</span></label>
+                                        @error('tahun')
+                                        <div class="text-danger" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group form-default">
+                                        <input type="text" name="status" class="form-control @error('status') is-invalid @enderror" value="{{old('status') ?? ($buku->status ?? '')}}" required>
+                                        <span class="form-bar"></span>
+                                        <label class="float-label">Status Buku <span class="text-danger">*</span></label>
+                                        @error('status')
                                         <div class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </div>

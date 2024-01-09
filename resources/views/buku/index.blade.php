@@ -52,6 +52,10 @@
                                                     <th>No</th>
                                                     <th>Kode Buku</th>
                                                     <th>Judul Buku</th>
+                                                    <th>Nama Penerbit</th>
+                                                    <th>Kota</th>
+                                                    <th>Tahun</th>
+                                                    <th>Status</th>
                                                     <th>Pengarang</th>
                                                     <th>Kategori</th>
                                                     <th>Kode Batang</th>
@@ -64,9 +68,16 @@
                                                         <td>{{ $K + 1 }}</td>
                                                         <td>{{$v->kode}}</td>
                                                         <td>{{ $v->judul }}</td>
+                                                        <td>{{ $v->penerbit }}</td>
+                                                        <td>{{ $v->kota }}</td>
+                                                        <td>{{ $v->tahun }}</td>
+                                                        <td>{{ $v->status }}</td>
                                                         <td>{{ $v->pengarang }}</td>
                                                         <td>{{ @$v->kategori->nama }}</td>
-                                                        <td class="kodeQr" data-nama="{{$v->kode}}">{!!DNS1D::getBarcodeHTML($v->kode, 'C39', 1, 30)!!}</td>
+                                                        <td class="kodeQr text-center" data-nama="{{$v->kode}}">
+                                                            <p>{!!DNS1D::getBarcodeHTML($v->kode, 'C39', 1, 30)!!}</p>
+                                                            <p class="fw-bold">{{$v->kode}}</p>
+                                                        </td>
                                                         <td>
                                                             <div class="dropdown-primary dropdown open">
                                                                 <button class="btn btn-primary btn-mini dropdown-toggle waves-light" type="button" id="dropdown-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aksi</button>

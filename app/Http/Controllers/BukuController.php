@@ -11,7 +11,7 @@ class BukuController extends Controller
 {
     public function index()
     {
-        $buku = Buku::orderBy('judul', 'ASC')->get();
+        $buku = Buku::orderBy('kode', 'ASC')->get();
         return view('buku.index', [
             'buku' => $buku
         ]);
@@ -26,13 +26,25 @@ class BukuController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
+            'kode' => 'required|max:255|unique:buku,kode',
             'judul' => 'required|max:255',
+            'penerbit' => 'required|max:255',
+            'kota' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'status' => 'required|max:255',
             'pengarang' => 'required|max:255',
             'kategori_id' => 'required|exists:kategori,id',
+        ], [
+            'kode.unique' => 'Kode sudah digunakan, silahkan gunakan kode lain.'
         ]);
 
         $buku = new Buku();
+        $buku->kode = $validatedData['kode'];
         $buku->judul = $validatedData['judul'];
+        $buku->penerbit = $validatedData['penerbit'];
+        $buku->kota = $validatedData['kota'];
+        $buku->tahun = $validatedData['tahun'];
+        $buku->status = $validatedData['status'];
         $buku->pengarang = $validatedData['pengarang'];
         $buku->kategori_id = $validatedData['kategori_id'];
         $buku->save();
@@ -50,13 +62,25 @@ class BukuController extends Controller
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
+            'kode' => 'required|max:255|unique:buku,kode,' . $id . ',id',
             'judul' => 'required|max:255',
+            'penerbit' => 'required|max:255',
+            'kota' => 'required|max:255',
+            'tahun' => 'required|max:255',
+            'status' => 'required|max:255',
             'pengarang' => 'required|max:255',
             'kategori_id' => 'required|exists:kategori,id',
+        ], [
+            'kode.unique' => 'Kode sudah digunakan, silahkan gunakan kode lain.'
         ]);
 
         $buku = Buku::find($id);
+        $buku->kode = $validatedData['kode'];
         $buku->judul = $validatedData['judul'];
+        $buku->penerbit = $validatedData['penerbit'];
+        $buku->kota = $validatedData['kota'];
+        $buku->tahun = $validatedData['tahun'];
+        $buku->status = $validatedData['status'];
         $buku->pengarang = $validatedData['pengarang'];
         $buku->kategori_id = $validatedData['kategori_id'];
         $buku->save();

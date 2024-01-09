@@ -12,6 +12,10 @@ return new class extends Migration
             $table->id();
             $table->string('kode')->unique();
             $table->string('judul');
+            $table->string('penerbit');
+            $table->string('kota');
+            $table->string('tahun');
+            $table->string('status');
             $table->string('pengarang');
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('kategori');

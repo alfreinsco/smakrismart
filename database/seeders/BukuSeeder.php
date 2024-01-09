@@ -21,15 +21,22 @@ class BukuSeeder extends Seeder
         $kategoriIds = Kategori::pluck('id')->toArray();
 
         // Generate kode unik
-
-        for ($i = 0; $i < 20; $i++) {
-            $kode = uniqid() . uniqid(); // Ganti format kode
-            Buku::create([
-                'kode' => $kode,
-                'judul' => $faker->sentence(3),
-                'pengarang' => $faker->name,
-                'kategori_id' => $faker->randomElement($kategoriIds),
-            ]);
+        for ($i = 1; $i <= 003; $i++) {
+            $nomorRak = str_pad($i, 3, '0', STR_PAD_LEFT); // Format nomor rak
+            for ($j = 1; $j <= 0020; $j++) {
+                $nomorBuku = str_pad($j, 4, '0', STR_PAD_LEFT); // Format nomor buku
+                $kode = $nomorRak . '-' . $nomorBuku; // Gabungkan nomor rak dan nomor buku
+                Buku::create([
+                    'kode' => $kode,
+                    'judul' => $faker->sentence(3),
+                    'penerbit' => $faker->company,
+                    'kota' => $faker->city,
+                    'tahun' => $faker->year,
+                    'status' => $faker->randomElement(['Dibeli', 'Diberikan', 'Lainya']),
+                    'pengarang' => $faker->name,
+                    'kategori_id' => $faker->randomElement($kategoriIds),
+                ]);
+            }
         }
     }
 }

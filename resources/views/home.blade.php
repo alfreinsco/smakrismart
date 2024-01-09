@@ -43,7 +43,7 @@
                         <div class="row">
                             <div class="col-md-12 col-sm-12 text-right">
                                 <div class="big-tagline">
-                                    <h2><strong>SMA KRISTEN </strong> SMART</h2>
+                                    <h2><strong style="font-family:'Times New Roman'; ">SMA KRISTEN </strong> <span style="font-family: monospace0; font-size: 200px ">SMART</span></h2>
                                     <form action="{{url('/buku')}}" method="POST">@csrf
                                         <div class="w-100 d-flex justify-content-end">
                                             <div class="form-group">
@@ -56,7 +56,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <button type="reset" class="hover-btn-new"><span>Reset</span></button>
+                                        <button type="reset" class="hover-btn-new rounded" ><span>Reset</span></button>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <button type="submit" class="hover-btn-new"><span>Cari</span></button>
                                     </form>

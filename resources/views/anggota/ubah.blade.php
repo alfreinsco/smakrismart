@@ -248,7 +248,7 @@
                                                 <p class="font-weight-bold" style="line-height: 0; font-size: 10px;">Ambon, 12-12-2023</p>
                                                 <p class="font-weight-bold" style="line-height: 0; margin-top: -5px; font-size: 10px;">Kepala Perpustakaan</p>
                                                 <img style="margin-top: -9px; margin-bottom: 5px" width="30" src="{{asset('/assets/images/qrcode.jpg')}}" alt="TTD">
-                                                <p class="text-light" style="line-height: 0; margin-top: 4px; font-size: 10px;">Marthin Alfreinsco Salakory</p>
+                                                <p class="text-light" style="line-height: 0; margin-top: 4px; font-size: 10px;">................</p>
                                             </div>
                                         </div>
                                     </div>

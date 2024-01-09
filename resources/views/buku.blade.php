@@ -18,9 +18,15 @@
                     <li class="nav-item"><a class="nav-link" href="{{url('/')}}">Home</a></li>
                     <li class="nav-item active"><a class="nav-link" href="{{url('/buku')}}">Data Buku</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="hover-btn-new log orange" href="#" data-toggle="modal" data-target="#login"><span>Login Admin</span></a></li>
-                </ul>
+                @auth
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="hover-btn-new log orange" href="{{route('dashboard')}}"><span>Dashboard</span></a></li>
+                    </ul>
+                @else
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="hover-btn-new log orange" href="#" data-toggle="modal" data-target="#login"><span>Login Admin</span></a></li>
+                    </ul>
+                @endauth
             </div>
         </div>
     </nav>

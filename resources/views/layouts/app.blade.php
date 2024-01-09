@@ -230,7 +230,7 @@
                                 </a>
                                 <ul class="show-notification profile-notification">
                                     {{-- <li class="waves-effect waves-light">
-                                        <a href="{{url('/')}}">
+                                        <a href="{{route('dashboard')}}">
                                             <i class="ti-user"></i> Profil
                                         </a>
                                     </li> --}}
@@ -262,7 +262,7 @@
                                 <div class="main-menu-content">
                                     <ul>
                                         <li class="more-details">
-                                            {{-- <a href="{{url('/')}}"><i class="ti-user"></i>Profil</a> --}}
+                                            {{-- <a href="{{route('dashboard')}}"><i class="ti-user"></i>Profil</a> --}}
                                             <a href="{{route('logout')}}"><i class="ti-layout-sidebar-left"></i>Logout</a>
                                         </li>
                                     </ul>
@@ -280,7 +280,7 @@
                             <div class="pcoded-navigation-label" data-i18n="nav.category.navigation">Layout</div>
                             <ul class="pcoded-item pcoded-left-item">
                                 <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                                    <a href="{{url('/')}}" class="waves-effect waves-dark">
+                                    <a href="{{route('dashboard')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-home"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Dashboard</span>
                                         <span class="pcoded-mcaret"></span>
@@ -331,7 +331,7 @@
                                     </a>
                                 </li>
                                 {{-- <li>
-                                    <a href="{{url('/')}}" class="waves-effect waves-dark">
+                                    <a href="{{route('dashboard')}}" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i class="icofont icofont-exchange"></i></span>
                                         <span class="pcoded-mtext" data-i18n="nav.dash.main">Usulan Koleksi</span>
                                         <span class="pcoded-mcaret"></span>
